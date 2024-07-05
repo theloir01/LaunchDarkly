@@ -81,7 +81,7 @@ project_key = "<your_project_key>"
 feature_flag_key = "<your_flag_key>"
 
 # Set the environment key. If this is your first time with LaunchDarkly this is likely to be the test environment
-environment_key = "your_environment_key"
+environment_key = "<your_environment_key>"
 
 # Set the API key.
 # If you haven't done so already go to LaunchDarkly https://app.launchdarkly.com/settings/authorization
