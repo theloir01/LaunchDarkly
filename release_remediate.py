@@ -8,7 +8,7 @@ HOW TO RUN THE CODE
 -------------------
 Obtain your SDK key from LaunchDarkly UI
 
-Run from terminal as follows:
+Run from terminal as follows or use environment variable to hold SDK key:
 
 LAUNCHDARKLY_SDK_KEY="<your-sdk-key>" python release_remediate.py
 
@@ -86,7 +86,7 @@ environment_key = "test"
 # Set the API key.
 # If you haven't done so already go to LaunchDarkly https://app.launchdarkly.com/settings/authorization
 # Create an Access Token and copy that value here
-api_key = "api-f5ab4bac-e681-42e4-b621-4d2aa4e63ac8"
+api_key = "<your_api_key_here>"
 
 # Begin Flask
 app = Flask(__name__)
