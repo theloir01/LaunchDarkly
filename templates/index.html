@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Pricing</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for styling -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 40px;
+        }
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pricing-table {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            margin-bottom: 40px;
+        }
+        .pricing-card {
+            margin: 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            width: 300px;
+        }
+        .pricing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .card-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .card-text {
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        .original-price {
+            color: #007bff;
+        }
+        .discount-price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+        .special-offer-box {
+            border: 1px solid #d9534f;
+            border-top: 5px solid #d9534f;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        .special-offer {
+            color: #d9534f;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .countdown-timer {
+            font-size: 1.2rem;
+            color: #d9534f;
+        }
+        .modal-content {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="pricing-header">Simple & Powerful Pricing Plans</h1>
+
+        <div class="pricing-table">
+            <div class="card pricing-card">
+                <div class="card-header">
+                    Essentials
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <span class="original-price" id="essentialsOriginalPrice">$10</span><br>
+                        <span class="discount-price" id="essentialsDiscountPrice"></span>
+                    </h2>
+                    <p class="card-text">Per user per month</p>
+                    <ul class="list-unstyled">
+                        <li>Basic features included</li>
+                        <li>Limited support</li>
+                        <li>Community forum access</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleRegisterInterest('Essentials')">Register Interest</button>
+                </div>
+            </div>
+
+            <div class="card pricing-card">
+                <div class="card-header">
+                    Pro
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <span class="original-price" id="proOriginalPrice">$25</span><br>
+                        <span class="discount-price" id="proDiscountPrice"></span>
+                    </h2>
+                    <p class="card-text">Per user per month</p>
+                    <ul class="list-unstyled">
+                        <li>All essential features</li>
+                        <li>Email support</li>
+                        <li>Monthly updates</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleRegisterInterest('Pro')">Register Interest</button>
+                </div>
+            </div>
+
+            <div class="card pricing-card">
+                <div class="card-header">
+                    Enterprise
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <span class="original-price" id="enterpriseOriginalPrice">$50</span><br>
+                        <span class="discount-price" id="enterpriseDiscountPrice"></span>
+                    </h2>
+                    <p class="card-text">Per user per month</p>
+                    <ul class="list-unstyled">
+                        <li>Custom features & integrations</li>
+                        <li>Priority support</li>
+                        <li>SLA agreements</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleRegisterInterest('Enterprise')">Register Interest</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="specialOfferBox" class="special-offer-box" style="display: none;">
+            <div class="special-offer">EXCLUSIVE DISCOUNT FOR YOU - PURCHASE WITHIN THE NEXT 24 HOURS AND GET A WHOPPING 25% OFF!!!</div>
+            <div class="countdown-timer" id="countdownTimer"></div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="interestModal" tabindex="-1" role="dialog" aria-labelledby="interestModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="interestModalLabel">Register Interest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="interestForm">
+                            <!-- Hidden input field to store the current plan -->
+                            <input type="hidden" id="plan" name="plan" value="">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company name</label>
+                                <input type="text" class="form-control" id="company" name="company" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="interest">What are you looking for?</label>
+                                <textarea class="form-control" id="interest" name="interest" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Submit Interest</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        let currentPlan = '';
+
+        // Function to handle register interest and open modal
+        function handleRegisterInterest(planName) {
+            currentPlan = planName;
+
+            // Send event that the button was clicked with the plan name
+            sendButtonClickEvent(planName);
+
+            // Open the modal for the corresponding plan
+            openModal(planName);
+        }
+
+        // Function to send event that the visitor has begun the process of registering interest
+        // for a given plan by clicking on the Register Interest button
+        function sendButtonClickEvent(planName) {
+            fetch('/register-interest-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ plan: planName })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Successfully sent event for registering interest for ${planName}`);
+                } else {
+                    console.error(`Failed to send event for registering interest for ${planName}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending event:', error);
+            });
+        }
+
+        // Function to send event that the visitor has completed the process of registering interest
+        // for a given plan by clicking on the Submit Interest button
+        function sendButtonClickEventComplete(planName) {
+            fetch('/complete-register-interest-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ plan: planName })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Successfully sent event for completing the registering of interest for ${planName}`);
+                } else {
+                    console.error(`Failed to send event for completing the registering of interest for ${planName}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending event:', error);
+            });
+        }
+
+        // Function to open modal and set plan name
+        function openModal(planName) {
+            const modalTitleElement = document.querySelector('.modal-title');
+            modalTitleElement.textContent = planName; // Set modal title to the plan name
+            $('#interestModal').modal('show');
+        }
+
+        // Submit form handler
+        document.getElementById('interestForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            formData.append('plan', currentPlan);
+            const plainFormData = Object.fromEntries(formData.entries());
+            fetch('/submit-interest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(plainFormData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Form submitted successfully:', data);
+                // Optionally, close the modal or show a success message
+                $('#interestModal').modal('hide');
+                alert('Thank you for registering your interest!');
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                // Handle errors if necessary
+            });
+        });
+
+        // Function to start countdown timer
+        function startCountdownTimer() {
+            // Set the target midnight time (adjust as needed)
+            const targetMidnight = new Date();
+            targetMidnight.setHours(24, 0, 0, 0); // Midnight tonight
+
+            // Update the countdown timer every second
+            const countdownElement = document.getElementById('countdownTimer');
+            const countdownInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetMidnight - now;
+
+                // Calculate remaining hours, minutes, seconds
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the countdown timer
+                countdownElement.innerHTML = `Offer ends in: ${hours}h ${minutes}m ${seconds}s`;
+
+                // If the countdown is finished, clear the interval
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerHTML = 'Offer expired!';
+                }
+            }, 1000);
+        }
+
+        // Function to fetch special offer status and update dynamically
+        function fetchSpecialOfferStatus() {
+            fetch('/get-special-offer-status')
+                .then(response => response.json())
+                .then(data => {
+                    const showSpecialOffer = data.show_special_offer;
+                    const specialOfferBox = document.getElementById('specialOfferBox');
+                    const essentialsOriginalPrice = document.getElementById('essentialsOriginalPrice');
+                    const proOriginalPrice = document.getElementById('proOriginalPrice');
+                    const enterpriseOriginalPrice = document.getElementById('enterpriseOriginalPrice');
+                    const essentialsDiscountPrice = document.getElementById('essentialsDiscountPrice');
+                    const proDiscountPrice = document.getElementById('proDiscountPrice');
+                    const enterpriseDiscountPrice = document.getElementById('enterpriseDiscountPrice');
+
+                    if (showSpecialOffer) {
+                        specialOfferBox.style.display = 'block';
+                        essentialsOriginalPrice.style.textDecoration = 'line-through';
+                        essentialsDiscountPrice.innerHTML = '$7.50';
+                        proOriginalPrice.style.textDecoration = 'line-through';
+                        proDiscountPrice.innerHTML = '$18.75';
+                        enterpriseOriginalPrice.style.textDecoration = 'line-through';
+                        enterpriseDiscountPrice.innerHTML = '$37.50';
+                        startCountdownTimer(); // Start countdown timer
+                    } else {
+                        specialOfferBox.style.display = 'none';
+                        essentialsOriginalPrice.style.textDecoration = 'none';
+                        essentialsDiscountPrice.innerHTML = '';
+                        proOriginalPrice.style.textDecoration = 'none';
+                        proDiscountPrice.innerHTML = '';
+                        enterpriseOriginalPrice.style.textDecoration = 'none';
+                        enterpriseDiscountPrice.innerHTML = '';
+                    }
+                });
+        }
+
+        // Fetch initial status on page load
+        fetchSpecialOfferStatus();
+
+        // Polling for real-time updates (every 5 seconds)
+        setInterval(fetchSpecialOfferStatus, 5000);
+    </script>
+</body>
+</html>
