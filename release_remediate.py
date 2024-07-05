@@ -75,18 +75,18 @@ import os
 sdk_key = os.getenv("LAUNCHDARKLY_SDK_KEY")
 
 # Set the project_key - use the value of "default" if it's your only project
-project_key = "default"
+project_key = "<your_project_key>"
 
 # Set feature_flag_key to the feature flag key you want to evaluate. I have used release-remediate here
-feature_flag_key = "release-remediate"
+feature_flag_key = "<your_flag_key>"
 
 # Set the environment key. If this is your first time with LaunchDarkly this is likely to be the test environment
-environment_key = "test"
+environment_key = "your_environment_key"
 
 # Set the API key.
 # If you haven't done so already go to LaunchDarkly https://app.launchdarkly.com/settings/authorization
 # Create an Access Token and copy that value here
-api_key = "<your_api_key_here>"
+api_key = "<your_api_key>"
 
 # Begin Flask
 app = Flask(__name__)
@@ -108,10 +108,10 @@ Usage:
 3. Change the country to something other than the United Kingdom and confirm the feature disappears automatically
 '''
 
-context = Context.builder("66868d612147e90ffe0ec805") \
-    .set("firstName", "Chris") \
-    .set("lastName", "Bloomfield") \
-    .set("email", "christopher.d.bloomfield@gmail.com") \
+context = Context.builder("<your-context-key>") \
+    .set("firstName", "firstName") \
+    .set("lastName", "lastName") \
+    .set("email", "email_address") \
     .set("country", "United Kingdom") \
     .build()
 
