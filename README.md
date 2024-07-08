@@ -19,8 +19,8 @@ Interactions with each pricing tier is tied back to given metrics to help unders
 PREREQUISITES
 -------------
 
-LaunchDarkly Trial Account
-Python3 locally installed
+- LaunchDarkly Trial Account
+- Python3 locally installed
 
 
 GETTING STARTED IN LAUNCHDARKLY
