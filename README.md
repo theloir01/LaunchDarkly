@@ -94,6 +94,7 @@ Revert back to the first context
 Confirm that the special pricing reappears
 
 Metrics Demo
+------------
 
 Within the Pricing webpage, click on any of the Register Interest
 Confirm that the IDE prints the streaming of the target back to LaunchDarkly tied to the specific pricing plan tier
