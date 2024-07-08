@@ -8,6 +8,14 @@ The goal of the assessment is as follows:
 4. [OPTIONAL] Create an experiment on the metrics created <--- NOTE that this feature is gated on the Trial account and is considered out of scope
 5. [OPTIONAL] Explore integrations
 
+OVERVIEW OF THE SOLUTION
+------------------------
+
+Focused on a B2C type use case to target special pricing behind a feature flag. 
+Basic pricing web page that is updated with target pricing based upon the visitor's location, or whether they are specifically targeted.
+The feature flag can be easily toggled on/off in case of errors or time limit.
+Interactions with each pricing tier is tied back to given metrics to help understand whether the pricing change has driven up interactions, and also conversion rates from initial interest to committing to interest.
+
 PREREQUISITES
 -------------
 
